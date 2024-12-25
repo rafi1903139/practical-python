@@ -52,38 +52,26 @@ def make_report(portfolio, prices):
         rows.append(holder)
 
     return rows
+
+
+def print_report(report):
+
+    headers = ('Name', 'Shares', 'Price', 'Change')
+   
+    print('%10s %10s %10s %10s' %headers)
+    print(f'{'':->10s} ' * len(headers))
+
+    for name, shares, price, change in report:
+        print(f'{name:>10s} {shares:>10d} {"$" + str(round(price, ndigits=2)):>10s} {change:>10.2f}')
         
-portfolio_path = 'Data/portfoliodate.csv'
-prices_path = 'Data/prices.csv'
 
-portfolio = read_portfolio(portfolio_path)
-prices = read_prices(prices_path)
+def portfolio_report(portfolio_filename, prices_filename):
+    
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
 
 
-total_cost = 0.0
+    report = make_report(portfolio=portfolio, prices=prices)
+    print_report(report)
+    
 
-for s in portfolio:
-     total_cost += s['shares'] * s['price']
-
-print('Total Cost:', total_cost)
-
-total_value = 0.0
-
-for s in portfolio:
-     total_value += s['shares'] * prices.get(s['name'], s['price'])
-
-print('Current value:', total_value)
-
-gain = total_value - total_cost
-
-print('Gain:', gain)
-
-report = make_report(portfolio=portfolio, prices=prices)
-headers = ('Name', 'Shares', 'Price', 'Change')
-separator = tuple('-'*len(header) for header in headers)
-
-print('%10s %10s %10s %10s' %headers)
-print(f'{'':->10s} ' * len(headers))
-
-for name, shares, price, change in report:
-     print(f'{name:>10s} {shares:>10d} {"$" + str(round(price, ndigits=2)):>10s} {change:>10.2f}')
