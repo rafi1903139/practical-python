@@ -45,6 +45,9 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter = '
                     records.append(record)
         else:
             for row in rows:
+                if not row:
+                    continue 
+                
                 if types:
                     try: 
                         record = tuple(func(val) for func, val in zip(types, row))

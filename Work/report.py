@@ -1,45 +1,24 @@
 # report.py
 #
 # Exercise 2.4
-import csv
+from fileparse import parse_csv 
 
 def read_portfolio(filename):
     '''Read and returns a list of portfolio with stock price'''
     
     
-    portfolio = []
+    portfolio = parse_csv(filename, 
+                          select=['name', 'shares', 'price'],
+                          types=[str, int, float])
 
-    with open(filename) as f:
-        rows = csv.reader(f)
-        headers = next(rows)
-
-        for row_no, row in enumerate(rows):
-            record = dict(zip(headers, row))
-
-            try:
-                holding = {
-                     'name': record['name'],
-                     'shares': int(record['shares']),
-                     'price': float(record['price'])
-                }
-                portfolio.append(holding)
-
-            except ValueError: 
-                    print(f"Row {row_no}: Couldn't parse the line {row}")
-    
     return portfolio
 
 
 def read_prices(filename):
     'Returns list of stocks and its prices'
-    prices = {}
-    with open(filename) as f:
-          rows = csv.reader(f)
-
-          for row in rows:
-               
-               if row:    
-                    prices[row[0]] = float(row[1])
+    pricelist = parse_csv(filename, has_headers=False, types=[str, float])
+    prices = dict(pricelist)
+    
     return prices
 
 
@@ -63,7 +42,7 @@ def print_report(report):
 
     for name, shares, price, change in report:
         print(f'{name:>10s} {shares:>10d} {"$" + str(round(price, ndigits=2)):>10s} {change:>10.2f}')
-        
+
 
 def portfolio_report(portfolio_filename, prices_filename):
     
@@ -73,5 +52,7 @@ def portfolio_report(portfolio_filename, prices_filename):
 
     report = make_report(portfolio=portfolio, prices=prices)
     print_report(report)
+
+portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
     
 

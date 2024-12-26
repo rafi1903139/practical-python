@@ -1,29 +1,18 @@
 # pcost.py
 #
 # Exercise 1.27
-import csv 
-import sys 
+from report import read_portfolio
+import sys
 
 def portfolio_cost(filename):
     'Returns the total cost of the share of the portfolio'
-    f = open(filename,'rt')
-    rows = csv.reader(f)
-    
-    # points the rows after header
-    headers = next(rows)
     
     total_cost = 0
 
+    portfolio = read_portfolio(filename)
 
-    for row_no, row in enumerate(rows,start=1):
-        record = dict(zip(headers, row))
-
-        try:
-            shares, price = int(record['shares']), float(record['price'])
-            total_cost += (shares * price)
-
-        except ValueError:
-            print(f"Row {row_no}: Couldn't convert: {row}")
+    for record in portfolio:
+        total_cost += record['shares'] * record['price']
 
     return total_cost 
 
