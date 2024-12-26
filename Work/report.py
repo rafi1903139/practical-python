@@ -3,15 +3,17 @@
 #
 # Exercise 2.4
 from fileparse import parse_csv 
+import stock
 
 def read_portfolio(filename):
     '''Read and returns a list of portfolio with stock price'''
     
     with open(filename, 'rt') as file:
-        portfolio = parse_csv(file, 
+        portdocs = parse_csv(file, 
                           select=['name', 'shares', 'price'],
                           types=[str, int, float])
 
+    portfolio = [stock.Stock(d['name'], d['shares'], d['price']) for d in portdocs]
     return portfolio
 
 
@@ -28,7 +30,7 @@ def make_report(portfolio, prices):
     rows = []
 
     for row in portfolio:
-        holder = (row['name'], row['shares'], prices.get(row['name'], row['price']), prices.get(row['name'], row['price']) - row['price'])
+        holder = (row.name, row.shares, prices.get(row.name, row.price), prices.get(row.name, row.price) - row.price)
 
         rows.append(holder)
 
