@@ -7,8 +7,8 @@ from fileparse import parse_csv
 def read_portfolio(filename):
     '''Read and returns a list of portfolio with stock price'''
     
-    
-    portfolio = parse_csv(filename, 
+    with open(filename, 'rt') as file:
+        portfolio = parse_csv(file, 
                           select=['name', 'shares', 'price'],
                           types=[str, int, float])
 
@@ -17,9 +17,10 @@ def read_portfolio(filename):
 
 def read_prices(filename):
     'Returns list of stocks and its prices'
-    pricelist = parse_csv(filename, has_headers=False, types=[str, float])
-    prices = dict(pricelist)
-    
+    with open(filename, 'rt') as file:
+        pricelist = parse_csv(file, has_headers=False, types=[str, float])
+        prices = dict(pricelist)
+        
     return prices
 
 
