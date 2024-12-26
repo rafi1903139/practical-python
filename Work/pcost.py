@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # pcost.py
 #
 # Exercise 1.27
@@ -16,12 +17,20 @@ def portfolio_cost(filename):
 
     return total_cost 
 
+def main(argv):
+    
+    if len(argv) != 2:
+        raise SystemExit(f'Usage {argv[0]} portfile')
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = 'Data/portfolio.csv'
+    portfilename = argv[1]
+    cost = portfolio_cost(portfilename)
 
-cost = portfolio_cost(filename)
+    print('Total cost', cost)
 
-print('Total cost', cost)
+
+if __name__ == '__main__':
+    import sys 
+    main(sys.argv)
+
+
+

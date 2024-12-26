@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # report.py
 #
 # Exercise 2.4
@@ -53,6 +54,28 @@ def portfolio_report(portfolio_filename, prices_filename):
     report = make_report(portfolio=portfolio, prices=prices)
     print_report(report)
 
-portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+
+
+def main(argv):
+    if len(argv) != 3:
+        raise SystemExit(f'Usage {argv[0]} portfile pricefile')
     
+    portfile = argv[1]
+    pricefile = argv[2]
+
+
+    portfolio_report(portfile, pricefile)
+
+
+if __name__ == '__main__':
+    import sys 
+    main(sys.argv)
+
+
+
+
+
+    
+
+
 
