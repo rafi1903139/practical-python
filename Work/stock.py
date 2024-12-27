@@ -13,3 +13,6 @@ class Stock:
             raise ValueError("Don't have enoough shares to sell")
         
         self.shares -= n_shares 
+
+    def __repr__(self):
+        return f'Stock({self.name}, {self.shares}, {self.price:.2f})'
