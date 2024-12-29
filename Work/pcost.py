@@ -7,15 +7,10 @@ import sys
 
 def portfolio_cost(filename):
     'Returns the total cost of the share of the portfolio'
-    
-    total_cost = 0
-
+ 
     portfolio = read_portfolio(filename)
 
-    for record in portfolio:
-        total_cost += record.cost
-
-    return total_cost 
+    return portfolio.total_cost
 
 def main(argv):
     
