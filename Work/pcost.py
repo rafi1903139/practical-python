@@ -13,7 +13,7 @@ def portfolio_cost(filename):
     portfolio = read_portfolio(filename)
 
     for record in portfolio:
-        total_cost += record.shares * record.price
+        total_cost += record.cost
 
     return total_cost 
 
