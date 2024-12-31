@@ -18,9 +18,7 @@ def make_dict(rows, headers):
         yield dict(zip(headers, row))
 
 def filter_symbols(rows, names):
-    for row in rows:
-        if row['name'] in names:
-            yield row 
+    return (row for row in rows if row['name'] in names)
 
 def parse_stock_data(lines):
     rows = csv.reader(lines)
@@ -30,7 +28,7 @@ def parse_stock_data(lines):
 
     return rows 
 
-def ticker(portfile, logfile, fmt):
+def ticker(portfile, logfile, fmt='txt'):
     
     portfolio = read_portfolio(portfile)
     formatter = create_formatter(fmt) 
@@ -46,12 +44,15 @@ def ticker(portfile, logfile, fmt):
         formatter.row(list(map(str, row.values())))
         
 
+def main(argv):
     
+    ticker(argv[1], argv[2], argv[3])
 
 
 if __name__ == '__main__':
-    lines = follow('Data/stocklog.csv')
-    rows = parse_stock_data(lines)
+    import sys 
 
-    for row in rows:
-        print(row)
+    if len(sys.argv) != 4:
+        raise UserWarning('Usage portfile logfile')
+    
+    main(sys.argv)

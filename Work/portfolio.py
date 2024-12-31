@@ -14,7 +14,7 @@ class Portfolio:
         return self._holdings[index]
     
     def __contains__(self, name):
-        return any([s.name == name for s in self._holdings])
+        return any((s.name == name for s in self._holdings))
     
 
     @property 
